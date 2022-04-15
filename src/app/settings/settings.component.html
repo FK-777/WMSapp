@@ -1,0 +1,79 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Settings
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button menu="menu"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+  </ion-header>
+
+    <ion-content [fullscreen]="true">
+      <ion-title class="title">Waste Management System</ion-title>
+        <ion-grid>
+          <ion-row>
+              <ion-col size="4" offset="4">
+                <ion-img src="../../assets/images/wms-logo.png" alt="logo"></ion-img>
+              </ion-col>
+         </ion-row>
+      </ion-grid>
+
+      <ion-card>
+        <ion-title class="card-title">General Settings</ion-title>
+        <ion-card-content class="bold-text">Change Image</ion-card-content>
+        <input type="file" id="fileLoader" #fileLoader name="files" title="Load File" hidden />
+
+          <ion-row>
+            <ion-col col-6>
+              <ion-card>
+              <button ion-button class="image-btn" (click)="presentActionSheet(fileLoader)">
+                <ion-icon class="iconcolor" size="large" name="camera-outline"></ion-icon>
+                <br>
+                <b>Upload Image</b>
+              </button>
+            </ion-card>
+            </ion-col>
+            <ion-col col-6>
+              <ion-card>
+              <button ion-button class="image-btn" (click)="removePic()" [disabled]="uploadImage === null">
+                <ion-icon class="iconcolor" size="large" name="trash-outline"></ion-icon>
+                <br>
+                <b>Remove Image</b>
+              </button>
+            </ion-card>
+            </ion-col>
+          </ion-row>
+          <span *ngIf="uploadImage != null">
+            <img id="checkinImage" class="userimage" [src]="uploadImage" (load)="imageLoaded()" /> 
+          </span>
+          <span *ngIf="processing">
+              <ion-spinner></ion-spinner>
+              <ion-card-content class="bold-text">Uploading...</ion-card-content>
+          </span>
+
+          <ion-card-content class="bold-text">Change Password</ion-card-content>
+
+          <form>
+            <ion-item class="round">
+              <ion-icon name="lock-closed-outline" color="primary" slot="start"></ion-icon>
+              <ion-input type="password" placeholder="Currrent Password"></ion-input>
+            </ion-item>
+            <ion-item class="round">
+              <ion-icon name="bag-add-outline" color="primary" slot="start"></ion-icon>
+              <ion-input type="password" placeholder="New Password"></ion-input>
+            </ion-item>
+            <ion-item class="round">
+              <ion-icon name="bag-check-outline" color="primary" slot="start"></ion-icon>
+              <ion-input type="password" placeholder="Confirm New Password"></ion-input>
+            </ion-item>
+          </form>
+
+          <button class="back">Save Changes</button>
+
+
+        
+        
+      </ion-card>
+  </ion-content>
+  

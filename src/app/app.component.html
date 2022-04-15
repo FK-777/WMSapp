@@ -1,3 +1,56 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+
+
+
+
+
+  <ion-menu menuId="menu" content-id="main">
+
+
+    <ion-header>
+    <ion-toolbar>
+      <ion-title>Menu</ion-title>
+    </ion-toolbar>
+    </ion-header>
+    <ion-content>
+    <ion-list>
+      <ion-menu-toggle>
+        <ion-item routerLink="/dashboard">
+          <ion-icon name="person"></ion-icon>
+          <ion-label>Dashboard</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+      <ion-menu-toggle>
+      <ion-item routerLink="/attendancethumb" class="select">
+        <ion-icon name="bar-chart"></ion-icon>
+        <ion-label>Attendance</ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+    <ion-menu-toggle>
+      <ion-item routerLink="apply-leave">
+        <ion-icon name="document-text"></ion-icon>
+        <ion-label>Apply Leave</ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+    <ion-menu-toggle>
+      <ion-item routerLink="leave-list">
+        <ion-icon name="list-circle"></ion-icon>
+        <ion-label>Leave History</ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+    <ion-menu-toggle>
+      <ion-item routerLink="settings">
+        <ion-icon name="settings"></ion-icon>
+        <ion-label>Settings</ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+      <ion-item routerLink="login">
+        <ion-icon name="open"></ion-icon>
+        <ion-label>Logout</ion-label>
+      </ion-item>
+    </ion-list>
+    </ion-content>
+    </ion-menu>
+    
+    <ion-router-outlet id="main"></ion-router-outlet>
 </ion-app>

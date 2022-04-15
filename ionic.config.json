@@ -1,5 +1,7 @@
 {
   "name": "WMSapp",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

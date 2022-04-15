@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Attendance
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button menu="menu"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+  </ion-header>
+  
+  
+  <ion-content [fullscreen]="true">
+    <ion-title class="title">Waste Management System</ion-title>
+      <ion-grid>
+        <ion-row>
+            <ion-col size="4" offset="4">
+              <ion-img src="../../assets/images/wms-logo.png" alt="logo"></ion-img>
+            </ion-col>
+       </ion-row>
+    </ion-grid>
+    <ion-card>
+    <ion-title class="card-title"><ion-icon name="warning" class="icon-color" size="large"></ion-icon>You're out of Office</ion-title>
+    <agm-map [latitude]="lat" [longitude]="lng">
+      [latitude]="lat"
+      [longitude]="lng"
+      [zoom]="zoom"
+      [disableDefaultUI]="false"
+      [zoomControl]="true"
+      (mapClick)="mapClicked($event)">
+    
+      <agm-marker 
+          [latitude]="lat"
+          [longitude]="lng">
+          
+        <agm-info-window>
+          <strong>Your Location</strong>
+        </agm-info-window>
+        
+      </agm-marker>
+    </agm-map>
+    <p>
+      Latitude: {{lat}}
+    </p>
+    <p>
+      Longitude: {{lng}}
+    </p>
+    <button class="back">Start Day</button>
+    </ion-card>
+    
+  </ion-content>

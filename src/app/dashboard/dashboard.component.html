@@ -1,0 +1,91 @@
+<ion-header>
+<ion-toolbar>
+  <ion-title>
+    Dashboard
+  </ion-title>
+  <ion-buttons slot="start">
+    <ion-menu-button menu="menu"></ion-menu-button>
+  </ion-buttons>
+</ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-title class="title">Waste Management System</ion-title>
+    <ion-grid>
+      <ion-row>
+          <ion-col size="4" offset="4">
+            <ion-img src="../../assets/images/wms-logo.png" alt="logo"></ion-img>
+          </ion-col>
+     </ion-row>
+  </ion-grid>
+  <ion-card>
+    <ion-grid>
+      <ion-row>
+          <ion-col size="4" offset="4">
+            <ion-img class="profile-img" src="https://bridgelawyers.ca/wp-content/uploads/2020/08/depositphotos_39258143-stock-illustration-businessman-avatar-profile-picture.jpg" alt="profilepic"></ion-img>
+          </ion-col>
+     </ion-row>
+  </ion-grid>
+  <ion-title class="card-title">User Name</ion-title>
+  <ion-row>
+    <ion-col col-6>
+      <ion-card>
+        <button ion-button class="dashboard-btn" (click)="checkin()">
+          <ion-icon class="iconcolor" size="large" name="log-in-outline"></ion-icon>
+          <br>
+          <b>Check-In</b>
+        </button>
+      </ion-card>
+    </ion-col>
+    <ion-col col-6>
+      <ion-card>
+        <button ion-button class="dashboard-btn" (click)="logout()">
+          <ion-icon class="iconcolor" size="large" name="log-out-outline"></ion-icon>
+          <br>
+          <b>Check-out</b>
+        </button>
+      </ion-card>     
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col col-6>
+      <ion-card>
+      <button ion-button class="dashboard-btn">
+        <ion-icon class="iconcolor" size="large" name="bar-chart-outline"></ion-icon>
+        <br>
+        <b>Attendance Report</b>
+      </button>
+    </ion-card>
+    </ion-col>    
+    <ion-col col-6>
+      <ion-card>
+      <button ion-button class="dashboard-btn" (click)="leavereport()">
+        <ion-icon class="iconcolor" size="large" name="list-circle-outline"></ion-icon>
+        <br>
+        <b>Leaves Report</b>
+      </button>
+    </ion-card>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col col-6>
+      <ion-card>
+      <button ion-button class="dashboard-btn" (click)="applyleave()">
+        <ion-icon class="iconcolor" size="large" name="document-text-outline"></ion-icon>
+        <br>
+        <b>Apply Leave</b>
+      </button>
+    </ion-card>
+    </ion-col>    
+    <ion-col col-6>
+      <ion-card>
+      <button ion-button class="dashboard-btn" (click)="settings()">
+        <ion-icon class="iconcolor" size="large" name="settings-outline"></ion-icon>
+        <br>
+        <b>Settings</b>
+      </button>
+    </ion-card>
+    </ion-col>
+  </ion-row>
+  </ion-card>
+  </ion-content>

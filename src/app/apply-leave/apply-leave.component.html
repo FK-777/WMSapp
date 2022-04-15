@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Leave Application
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button menu="menu"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+  </ion-header>
+  
+  
+  <ion-content [fullscreen]="true">
+    <ion-title class="title">Waste Management System</ion-title>
+  
+      <ion-grid>
+        <ion-row>
+            <ion-col size="4" offset="4">
+              <ion-img src="../../assets/images/wms-logo.png" alt="logo"></ion-img>
+            </ion-col>
+       </ion-row>
+    </ion-grid>
+  
+    <ion-card>
+    
+    <ion-title class="card-title">Leave Application</ion-title>
+
+    <ion-item>
+      <ion-label>Leave Type</ion-label>
+      <ion-select value="Select" okText="Okay" cancelText="Dismiss">
+        <ion-select-option value="Casual">Casual</ion-select-option>
+        <ion-select-option value="Medical">Medical</ion-select-option>
+        <ion-select-option value="Privilege">Privilege</ion-select-option>
+        <ion-select-option value="Compensatory Off">Compensatory Off</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item class="date">
+      <form action="">
+        <label for="start">Starts From</label>
+        <ion-input class="input" type="date"></ion-input>
+      </form>
+    </ion-item>
+    <ion-item class="date">
+      <form action="">
+        <label for="End">End</label>
+        <ion-input class="input" type="date"></ion-input>
+      </form>
+    </ion-item>
+    
+    <ion-item>
+      <ion-label position="floating">Spacify a reason</ion-label>
+      <ion-textarea autoGrow="true"></ion-textarea>
+    </ion-item>
+
+    <button class="back">Submit</button>
+
+    </ion-card>
+
+
+
+   
+    
+  </ion-content>
