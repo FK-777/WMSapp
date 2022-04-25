@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ValidationErrors, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from 'src/app/_core/services/common';
-import { UserService } from 'src/app/_core/services/user.service';
+import { AuthService } from 'src/app/core/services/common/auth.service';
+import { AuthenticationService } from 'src/app/core/services/common/authentication.service';
 import { ToastController } from '@ionic/angular';
 
 @Component({
@@ -11,7 +11,7 @@ import { ToastController } from '@ionic/angular';
   styleUrls: ['./update-password.component.scss']
 })
 export class UpdatePasswordComponent implements OnInit {
-  public form: FormGroup;
+  public passwordForm: FormGroup;
   public isProcessing = false;
   public user: any;
 
@@ -28,12 +28,13 @@ export class UpdatePasswordComponent implements OnInit {
     };
   }
 
-  constructor(private userService: UserService, private formBuilder: FormBuilder, private router: Router,
-              public toastController: ToastController) { }
+  constructor(private formBuilder: FormBuilder, private router: Router,
+              public toastController: ToastController,
+              private authenticationService: AuthenticationService) { }
 
   ngOnInit() {
     this.user = AuthService.getLoggedUser();
-    this.form = this.formBuilder.group({
+    this.passwordForm = this.formBuilder.group({
       password: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
       newPassword: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(16)]],
       newPasswordMatch: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(16),
@@ -43,42 +44,43 @@ export class UpdatePasswordComponent implements OnInit {
 
   updatePassword() {
     this.isProcessing = true;
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
+    console.log("Clicked");
+    if (this.passwordForm.invalid) {
+      this.passwordForm.markAllAsTouched();
       return;
     }
-    // this.userService.changePassword(this.form.value.password, this.form.value.newPassword).subscribe((response) => {
-    //   this.isProcessing = false;
-    //   this.form.reset();
-    //   this.router.navigate(['/screen/update-profile']);
-    //   this.presentToast('Password updated successfully!');
-    // }, (error) => {
-    //   this.presentToast('Password cannot be updated!');
-    //   this.isProcessing = false;
-    // });
+     this.authenticationService.changePassword(this.passwordForm.value.password, this.passwordForm.value.newPassword).subscribe((response) => {
+       this.isProcessing = false;
+       this.passwordForm.reset();
+       this.router.navigate(['/screen/update-profile']);
+       this.presentToast('Password updated successfully!');
+     }, (error) => {
+       this.presentToast('Password cannot be updated!');
+       this.isProcessing = false;
+     });
   }
 
 
   passwordError() {
-    return this.form.controls.password.hasError('required') ? 'Password is required' :
-      this.form.controls.password.hasError('minlength') ? 'Password is required of minimum 8 characters' :
-        this.form.controls.password.hasError('maxlength') ? 'Password cannot exceed 16 characters' :
+    return this.passwordForm.controls.password.hasError('required') ? 'Password is required' :
+      this.passwordForm.controls.password.hasError('minlength') ? 'Password is required of minimum 8 characters' :
+        this.passwordForm.controls.password.hasError('maxlength') ? 'Password cannot exceed 16 characters' :
           '';
   }
 
 
   newPasswordError() {
-    return this.form.controls.newPassword.hasError('required') ? 'Password is required' :
-      this.form.controls.newPassword.hasError('minlength') ? 'Password is required of minimum 8 characters' :
-        this.form.controls.newPassword.hasError('maxlength') ? 'Password cannot exceed 16 characters' :
+    return this.passwordForm.controls.newPassword.hasError('required') ? 'Password is required' :
+      this.passwordForm.controls.newPassword.hasError('minlength') ? 'Password is required of minimum 8 characters' :
+        this.passwordForm.controls.newPassword.hasError('maxlength') ? 'Password cannot exceed 16 characters' :
           '';
   }
 
   newPasswordMatchError() {
-    return this.form.controls.newPasswordMatch.hasError('required') ? 'Confirm password is required' :
-      this.form.controls.newPasswordMatch.hasError('minlength') ? 'Confirm password is required of minimum 8 characters' :
-        this.form.controls.newPasswordMatch.hasError('maxlength') ? 'Confirm password cannot exceed 16 characters' :
-          this.form.controls.newPasswordMatch.hasError('isMatching') && this.form.controls.newPasswordMatch.touched ?
+    return this.passwordForm.controls.newPasswordMatch.hasError('required') ? 'Confirm password is required' :
+      this.passwordForm.controls.newPasswordMatch.hasError('minlength') ? 'Confirm password is required of minimum 8 characters' :
+        this.passwordForm.controls.newPasswordMatch.hasError('maxlength') ? 'Confirm password cannot exceed 16 characters' :
+          this.passwordForm.controls.newPasswordMatch.hasError('isMatching') && this.passwordForm.controls.newPasswordMatch.touched ?
             'Confirm password does not match' :
             '';
   }

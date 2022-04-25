@@ -1,0 +1,28 @@
+:host {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.auth-form-wrapper {
+  min-height: 380px;
+}
+.xl-icon {
+  width: 100px;
+  height: auto;
+}
+.loading {
+  width: 50px;
+  height: auto;
+  animation-name: ckw;
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
+}
+@keyframes ckw {
+  0% {
+      transform: rotate(0deg);
+  }
+  100% {
+      transform: rotate(360deg);
+  }
+}

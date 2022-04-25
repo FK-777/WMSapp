@@ -22,12 +22,18 @@
     </ion-grid>
   
     <ion-card>
+      
+      <form [formGroup]="attendancePinForm" #attendancePinFormRef="ngForm" novalidate>
+      </form>
+
       <ion-card-title class="card-title">Enter PIN</ion-card-title>
+      <form [formGroup]="pinForm" #pinFormRef="ngForm" novalidate>
       <ion-item class="round">
         <ion-icon name="apps-outline" slot="start"></ion-icon>
-        <ion-input type="password" placeholder="Enter Pin"></ion-input>
+        <ion-input type="number" placeholder="Enter Pin" formControlName="pin" required></ion-input>
       </ion-item>
-      <button class="back" (click)="checkin()">Submit</button>
+    </form>
+      <button class="back" (click)="submit()">Submit</button>
     </ion-card>
 <!-- <ion-tabs>
   <ion-tab-bar slot="bottom">

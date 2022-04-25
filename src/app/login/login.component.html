@@ -21,7 +21,7 @@
       <ion-input type="password" formControlName="password" placeholder="Password" required></ion-input>
       <span class="has-error" *ngIf="passwordError()">{{passwordError()}}</span>
     </ion-item>
-      <ion-card-content class="bold-text">Forgot Password?</ion-card-content>
+      <ion-card-content class="bold-text" routerLink="/auth/forgot-password">Forgot Password?</ion-card-content>
     <button class="back" [disabled]="processingReq" (click)="login()">Login</button>
   </form>
 

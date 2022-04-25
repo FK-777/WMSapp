@@ -31,16 +31,16 @@
     <ion-col col-6>
       <ion-card>
         <button ion-button class="dashboard-btn" (click)="checkin()">
-          <ion-icon class="iconcolor" size="large" name="log-in-outline"></ion-icon>
+          <ion-icon class="iconcolor" size="large" name="add-circle-outline"></ion-icon>
           <br>
-          <b>Check-In</b>
+          <b>Mark Attendance</b>
         </button>
       </ion-card>
     </ion-col>
     <ion-col col-6>
       <ion-card>
-        <button ion-button class="dashboard-btn" (click)="logout()">
-          <ion-icon class="iconcolor" size="large" name="log-out-outline"></ion-icon>
+        <button ion-button class="dashboard-btn" (click)="checkout()">
+          <ion-icon class="iconcolor" size="large" name="time-outline"></ion-icon>
           <br>
           <b>Check-out</b>
         </button>
@@ -50,7 +50,7 @@
   <ion-row>
     <ion-col col-6>
       <ion-card>
-      <button ion-button class="dashboard-btn">
+      <button ion-button class="dashboard-btn" (click)="attendanereport()">
         <ion-icon class="iconcolor" size="large" name="bar-chart-outline"></ion-icon>
         <br>
         <b>Attendance Report</b>
@@ -87,5 +87,14 @@
     </ion-card>
     </ion-col>
   </ion-row>
+
+  <ion-card>
+    <button ion-button class="dashboard-btn" (click)="logout()">
+      <ion-icon class="iconcolor" size="large" name="log-out-outline"></ion-icon>
+      <br>
+      <b>Logout</b>
+    </button>
+  </ion-card>
+
   </ion-card>
   </ion-content>

@@ -25,9 +25,11 @@
     
     <ion-title class="card-title">Leave Application</ion-title>
 
+    <form [formGroup]="leaveApplicationForm" #leaveApplicationFormRef="ngForm"
+              (ngSubmit)="testerSubmitForm()" novalidate>
     <ion-item>
       <ion-label>Leave Type</ion-label>
-      <ion-select value="Select" okText="Okay" cancelText="Dismiss">
+      <ion-select value="Select" okText="Okay" cancelText="Dismiss" formControlName="type">
         <ion-select-option value="Casual">Casual</ion-select-option>
         <ion-select-option value="Medical">Medical</ion-select-option>
         <ion-select-option value="Privilege">Privilege</ion-select-option>
@@ -36,24 +38,24 @@
     </ion-item>
 
     <ion-item class="date">
-      <form action="">
         <label for="start">Starts From</label>
-        <ion-input class="input" type="date"></ion-input>
-      </form>
+        <ion-input class="input" type="date" formControlName="startDate"></ion-input>
+      
     </ion-item>
     <ion-item class="date">
-      <form action="">
         <label for="End">End</label>
-        <ion-input class="input" type="date"></ion-input>
-      </form>
+        <ion-input class="input" type="date" formControlName="endDate"></ion-input>
+      
     </ion-item>
     
     <ion-item>
       <ion-label position="floating">Spacify a reason</ion-label>
-      <ion-textarea autoGrow="true"></ion-textarea>
+      <ion-textarea autoGrow="true" formControlName="reason"></ion-textarea>
     </ion-item>
 
-    <button class="back">Submit</button>
+    <button class="back" (click)="createLeaves()">Submit</button>
+
+  </form>
 
     </ion-card>
 

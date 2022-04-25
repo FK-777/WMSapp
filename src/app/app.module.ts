@@ -1,19 +1,23 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
-
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
-
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AgmCoreModule } from '@agm/core';
 import { FingerprintAIO } from '@ionic-native/fingerprint-aio/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { UiLoaderService } from 'src/app/_core/services/common/ui-loader.service';
-import { AuthenticationService, AuthService, WrapHttpService } from './_core/services/common';
+//import { UiLoaderService } from 'src/app/_core/services/common/ui-loader.service';
+//import { AuthenticationService, AuthService, WrapHttpService } from './_core/services/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AuthModule } from './auth/auth.module';
+//import { AuthModule } from './auth/auth.module';
+import { AuthService } from './core/services/common/auth.service';
+import { AuthenticationService } from './core/services/common/authentication.service';
+import { CoreModule } from './core/core.module';
 import { HttpClientModule } from '@angular/common/http';
+import { WrapHttpService } from './core/services/common/wrap-http.service';
+import { AuthModule } from './auth/auth.module';
+//import { BackgroundGeolocation } from '@ionic-native/background-geolocation/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,6 +27,7 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
+    CoreModule,
     AuthModule,
     HttpClientModule,
     AgmCoreModule.forRoot({
@@ -30,8 +35,14 @@ import { HttpClientModule } from '@angular/common/http';
     // https://developers.google.com/maps/documentation/javascript/get-api-key?hl=en
     apiKey: 'AIzaSyAP8n5GbRjUqB9dQfxDfZLJuFam4PjHOTs'
   })],
-  providers: [ Geolocation, FingerprintAIO, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    AuthService, AuthenticationService, WrapHttpService, UiLoaderService],
+  providers: [
+    Geolocation,
+    FingerprintAIO,
+    //BackgroundGeolocation,
+    AuthService,
+    AuthenticationService,
+    WrapHttpService,
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

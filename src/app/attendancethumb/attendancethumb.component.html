@@ -29,6 +29,8 @@
               <ion-img src="../../assets/images/impression.png" alt="logo"></ion-img>
             </ion-col>
        </ion-row>
+    <form [formGroup]="attendanceThumbForm" #attendanceThumbFormRef="ngForm" novalidate>
+    </form>
        <ion-button expand="full" fill="outline" (click)="showFingeerprintAuthentication()">Fingerprint Authenticate
        </ion-button>
     <ion-card-content class="bold-text">
@@ -61,6 +63,5 @@
   </ion-tab-bar>
 </ion-tabs> -->
 
-   
     
   </ion-content>

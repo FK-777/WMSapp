@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AttendancethumbComponent } from './attendancethumb.component';
-
+import { DatePipe } from '@angular/common';
 import { AttendancethumbComponentRoutingModule } from './attendancethumb-routing.module';
+import { DashboardComponent } from '../dashboard/dashboard.component';
 
 
 @NgModule({
@@ -12,8 +13,10 @@ import { AttendancethumbComponentRoutingModule } from './attendancethumb-routing
     CommonModule,
     FormsModule,
     IonicModule,
+    ReactiveFormsModule,
     AttendancethumbComponentRoutingModule
   ],
-  declarations: [AttendancethumbComponent]
+  declarations: [AttendancethumbComponent],
+  providers: [DatePipe, DashboardComponent]
 })
 export class AttendancethumbComponentModule {}

@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Check-out
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button menu="menu"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+  </ion-header>
+  
+  
+  <ion-content [fullscreen]="true">
+    <ion-title class="title">Waste Management System</ion-title>
+      <ion-grid>
+        <ion-row>
+            <ion-col size="4" offset="4">
+              <ion-img src="../../assets/images/wms-logo.png" alt="logo"></ion-img>
+            </ion-col>
+       </ion-row>
+    </ion-grid>
+
+    <ion-card>
+    <ion-card-title class="card-title">Going Home?</ion-card-title>
+    <ion-grid>
+      <ion-card-content class="bold-text">
+        You're already on duty!
+      </ion-card-content>
+    <form [formGroup]="attendanceThumbForm" #attendanceThumbFormRef="ngForm" novalidate>
+    <ion-button expand="full" fill="outline" (click)="checkOut()">Check Out
+    </ion-button> 
+  </form>
+     
+
+</ion-grid>
+  
+
+
+   </ion-card>
