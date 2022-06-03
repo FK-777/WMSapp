@@ -20,20 +20,17 @@
        </ion-row>
     </ion-grid>
 
-    <ion-card>
+    <ion-card *ngFor="let add of officeLeaves">
     <ion-card-title class="card-title">Going Home?</ion-card-title>
     <ion-grid>
       <ion-card-content class="bold-text">
         You're already on duty!
       </ion-card-content>
-    <form [formGroup]="attendanceThumbForm" #attendanceThumbFormRef="ngForm" novalidate>
-    <ion-button expand="full" fill="outline" (click)="checkOut()">Check Out
+    <form>
+    <ion-button expand="full" fill="outline" (click)="updateApproveStatus(add._id)">Check Out
     </ion-button> 
   </form>
-     
-
 </ion-grid>
-  
-
-
    </ion-card>
+
+   

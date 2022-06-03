@@ -17,7 +17,8 @@ export class AttendancepinComponent implements OnInit, AfterViewInit {
 
   user = AuthService.getLoggedUser();
   userID = AuthService.getLoggedUser().id;
-
+  officeID = AuthService.getLoggedUser().OfficeId;
+  
   @ViewChild('attendancePinFormRef', { static: false }) attendancePinFormRef: NgForm;
   @ViewChild('pinFormRef', { static: false }) pinFormRef: NgForm;
   public attendancePinForm: FormGroup;
@@ -26,13 +27,19 @@ export class AttendancepinComponent implements OnInit, AfterViewInit {
   lng: number = 0;
   public users = [];
   public itsMe = [];
+  public myOffice = [];
+  public officeUserOne = [];
+  public officeUserTwo = [];
+
   hour;
   minute;
   second;
   date;
   month;
   year;
+  
   myDate = new Date();
+  currentDateTime: any;
   constructor(private route: Router, private userService: userService,
     private attendanceService: attendanceService, public toastController: ToastController,
     private geo: Geolocation, private datePipe: DatePipe) {
@@ -43,6 +50,8 @@ export class AttendancepinComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.fetchUsers();
     this.getLocation();
+    this.fetchOfficeUsers();
+    this.fetchCurentDate();
     this.attendancePinForm = new FormGroup({
       //pin: new FormControl('', [Validators.required]),
     });
@@ -80,16 +89,21 @@ export class AttendancepinComponent implements OnInit, AfterViewInit {
        this.presentToast("Please Enter a 4 digit PIN!");
        console.log("in if statement");
      }
-
-     if(this.pinForm.value.pin == this.itsMe[0]['pin']){
+     this.hour = this.myDate.getHours();
+     if(this.pinForm.value.pin == this.itsMe[0]['pin'] && this.currentDateTime != 6 && this.currentDateTime != 7 && this.hour < 9){
        console.log("Correct");
        this.createAttendance();
      }else{
      console.log("Not Correct");
-     this.presentToast("Incorrect PIN!");
+     this.presentToast("Incorrect PIN! or its holiday");
      }
   }
 
+  public fetchCurentDate(){
+    this.currentDateTime= new Date().getDay();
+   console.log(this.currentDateTime);
+    }
+    
   createAttendance() {
     //this.isSubmitted = true;
     console.log(this.attendancePinForm.value);
@@ -101,6 +115,7 @@ export class AttendancepinComponent implements OnInit, AfterViewInit {
      }
     const value = JSON.parse(JSON.stringify(this.attendancePinForm.value));
     value[`EmployeeId`] = AuthService.getLoggedUser().id;
+    value[`OfficeId`] = this.officeID;
     this.hour = this.myDate.getHours();
     this.minute = this.myDate.getMinutes();
     this.second = this.myDate.getSeconds();
@@ -110,14 +125,26 @@ export class AttendancepinComponent implements OnInit, AfterViewInit {
     this.month = this.myDate.getMonth() + 1;
     this.year = this.myDate.getFullYear();
     console.log(this.date, this.month, this.year);
+    
+
+
+   if(this.myOffice['lng'] == this.lng && this.myOffice['lat'] == this.lat){
+     value['location'] = "in";
+   }
+   if(this.myOffice['lng'] != this.lng && this.myOffice['lat'] != this.lat){
+    value['location'] = "out";
+  }
+
     value['date'] = this.date + "/" + this.month + "/" + this.year;
     value['day'] = this.myDate.getDay();
     value['lat'] = this.lat;
     value['lng'] = this.lng;
     value['status'] = "Present";
-    value['isVerified'] = false;
+    value['isVerified'] = true;
+    value['entery'] = "pin";
     console.log("out of if statement...");
-
+    console.log("duzz dim");
+    console.log(this.lng);
      if (this.attendancePinForm.value._id) {
        this.attendanceService.updateAttendance(this.attendancePinForm.value._id, value).subscribe((response) => {
          console.log("Attendance updated successfully");
@@ -153,6 +180,31 @@ export class AttendancepinComponent implements OnInit, AfterViewInit {
         }
       }
       console.log(this.itsMe);
+      })
+    }
+
+    fetchOfficeUsers() {
+      const conditions = {};
+      console.log(this.officeID);
+      this.userService.getUsers(conditions).subscribe((response) => {
+      this.officeUserOne = response;
+      for(let i=0, j=0; i<this.officeUserOne.length; i++){
+        if(this.officeUserOne[i]['_id'] == this.officeID){
+          
+          this.myOffice = this.officeUserOne[i]
+          console.log("Do do do");
+          console.log(this.lng);
+          console.log("No No no");
+         console.log(this.myOffice['lng'])
+         console.log("shugal mela");
+        
+          
+          //this.officeUserTwo[j] = this.officeUserOne[i];
+          //j++;
+         
+        }
+      }
+     
       })
     }
 

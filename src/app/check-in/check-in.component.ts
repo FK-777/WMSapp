@@ -17,7 +17,7 @@ export class CheckInComponent implements OnInit {
   lng: number = 0;
   constructor(public navCtrl: NavController, private geo: Geolocation) {}
   ngOnInit(): void {
-    this.getLocation(); 
+    this.getLocation();
   }
 
     getLocation() {

@@ -5,8 +5,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './login.component';
 
 import { LoginComponentRoutingModule } from './login-routing.module';
-
-
 @NgModule({
   imports: [
     CommonModule,

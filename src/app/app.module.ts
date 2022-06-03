@@ -20,29 +20,29 @@ import { AuthModule } from './auth/auth.module';
 //import { BackgroundGeolocation } from '@ionic-native/background-geolocation/ngx';
 
 @NgModule({
-  declarations: [AppComponent],
-  entryComponents: [],
-  imports: [BrowserModule,
-    IonicModule.forRoot(),
-    FormsModule,
-    ReactiveFormsModule,
-    AppRoutingModule,
-    CoreModule,
-    AuthModule,
-    HttpClientModule,
-    AgmCoreModule.forRoot({
-    // please get your own API key here:
-    // https://developers.google.com/maps/documentation/javascript/get-api-key?hl=en
-    apiKey: 'AIzaSyAP8n5GbRjUqB9dQfxDfZLJuFam4PjHOTs'
-  })],
-  providers: [
-    Geolocation,
-    FingerprintAIO,
-    //BackgroundGeolocation,
-    AuthService,
-    AuthenticationService,
-    WrapHttpService,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
-  bootstrap: [AppComponent],
+    declarations: [AppComponent],
+    imports: [BrowserModule,
+        IonicModule.forRoot(),
+        FormsModule,
+        ReactiveFormsModule,
+        AppRoutingModule,
+        CoreModule,
+        AuthModule,
+        HttpClientModule,
+        AgmCoreModule.forRoot({
+            // please get your own API key here:
+            // https://developers.google.com/maps/documentation/javascript/get-api-key?hl=en
+            apiKey: 'AIzaSyAP8n5GbRjUqB9dQfxDfZLJuFam4PjHOTs'
+        })],
+    providers: [
+        Geolocation,
+        FingerprintAIO,
+        //BackgroundGeolocation,
+        AuthService,
+        AuthenticationService,
+        WrapHttpService,
+        { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule {}

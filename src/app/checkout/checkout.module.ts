@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { CheckoutComponent } from './checkout.component';
-
 import { CheckoutComponentRoutingModule } from './checkout-routing.module';
 import { AgmCoreModule } from '@agm/core';
 
@@ -20,6 +19,7 @@ import { AgmCoreModule } from '@agm/core';
       apiKey: 'AIzaSyAP8n5GbRjUqB9dQfxDfZLJuFam4PjHOTs'
     })
   ],
-  declarations: [CheckoutComponent]
+  declarations: [CheckoutComponent],
+  providers: [DatePipe]
 })
 export class CheckoutComponentModule {}

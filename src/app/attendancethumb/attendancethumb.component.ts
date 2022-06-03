@@ -12,6 +12,7 @@ import { DashboardComponent } from '../dashboard/dashboard.component';
 @Component({
   selector: 'app-attendancethumb',
   templateUrl: './attendancethumb.component.html',
+   
   styleUrls: ['./attendancethumb.component.scss'],
 })
 export class AttendancethumbComponent implements OnInit, AfterViewInit {
@@ -24,6 +25,7 @@ export class AttendancethumbComponent implements OnInit, AfterViewInit {
   public checkOutForm: FormGroup;
   lat: number = 0;
   lng: number = 0;
+  officeID = AuthService.getLoggedUser().OfficeId;
   hour;
   minute;
   second;
@@ -31,6 +33,8 @@ export class AttendancethumbComponent implements OnInit, AfterViewInit {
   month;
   year;
   myDate = new Date();
+  currentDateTime: any;
+  currentExchangeDate : any;
   constructor(private route: Router, private faio: FingerprintAIO,
     private attendanceService: attendanceService, public toastController: ToastController,
     private geo: Geolocation, private datePipe: DatePipe,
@@ -49,6 +53,7 @@ export class AttendancethumbComponent implements OnInit, AfterViewInit {
     console.log(this.myDate.getTime());
     console.log(this.myDate.getHours() + "/" + this.myDate.getMinutes() + "/" + this.myDate.getSeconds());
     console.log(this.myDate.getDate()+ "/" + this.myDate.getMonth() + "/" + this.myDate.getFullYear());
+    this.fetchCurentDate();
     this.attendanceThumbForm = new FormGroup({
       //type: new FormControl('', [Validators.required]),
     });
@@ -72,9 +77,10 @@ export class AttendancethumbComponent implements OnInit, AfterViewInit {
 
 
   public showFingeerprintAuthentication() {
-
+ 
+    if(this.currentDateTime != 6 && this.currentDateTime != 7){
     console.log("Button clicked")
-    this.createAttendance()
+    this.createAttendance() ;
     this.faio.isAvailable().then((result: any) => {
       console.log(result)
       console.log("Button clicked")
@@ -96,11 +102,11 @@ export class AttendancethumbComponent implements OnInit, AfterViewInit {
           console.log(error)
           //alert("Match not found!")
           this.route.navigate(['/attendancepin']);
-        });
-    })
+        });}
+    )
       .catch((error: any) => {
         console.log(error)
-      });
+      });}
   }
 
   getLocation() {
@@ -116,8 +122,6 @@ export class AttendancethumbComponent implements OnInit, AfterViewInit {
     });
   }
 
-
-
   createAttendance() {
     //this.isSubmitted = true;
     console.log(this.attendanceThumbForm.value);
@@ -129,22 +133,24 @@ export class AttendancethumbComponent implements OnInit, AfterViewInit {
      }
     const value = JSON.parse(JSON.stringify(this.attendanceThumbForm.value));
     value[`EmployeeId`] = AuthService.getLoggedUser().id;
+    value[`OfficeId`] = this.officeID;
     this.hour = this.myDate.getHours();
     this.minute = this.myDate.getMinutes();
     this.second = this.myDate.getSeconds();
     value['inTime'] = this.hour + ":" + this.minute + ":" + this.second;
+    value['outTime'] = "none"
     //value['outTime'] = this.lng;
     this.date = this.myDate.getDate();
     this.month = this.myDate.getMonth() + 1;
     this.year = this.myDate.getFullYear();
     console.log(this.date, this.month, this.year);
-    value['date'] = this.date + "/" + this.month + "/" + this.year;
+    value['date'] = this.currentExchangeDate;
     value['day'] = this.myDate.getDay();
     value['lat'] = this.lat;
     value['lng'] = this.lng;
     value['status'] = "Present";
     value['isVerified'] = true;
-    
+    value['entery'] = "thumb";
     
     //value['signature'] = this.signatureImage;
     //value['barcode'] = this.scannedData["text"];
@@ -176,6 +182,13 @@ export class AttendancethumbComponent implements OnInit, AfterViewInit {
       
     }
 
+    public fetchCurentDate (){
+      this.currentDateTime= new Date().getDay();
+     console.log(this.currentDateTime);
+     this.currentExchangeDate=this.datePipe.transform((new Date), 'dd/M/yyyy');
+     console.log(this.currentExchangeDate);
+      }
+      
     checkOut() {
       //console.log(sampleId);
       this.hour = this.myDate.getHours();

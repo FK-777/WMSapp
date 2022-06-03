@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { DashboardComponent } from './dashboard.component';
@@ -14,5 +14,7 @@ import { DashboardComponentRoutingModule } from './dashboard-routing.module';
     DashboardComponentRoutingModule
   ],
   declarations: [DashboardComponent]
+  ,
+  providers: [DatePipe],
 })
 export class DashboardComponentModule {}

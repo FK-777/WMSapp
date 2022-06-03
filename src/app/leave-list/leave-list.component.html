@@ -19,68 +19,12 @@
        </ion-row>
     </ion-grid>
 
-    <ion-card>
+    <ion-card  >
       <ion-title class="card-title">List of Previous Applications</ion-title>
-      <ion-list>
-          <ion-item (click)="details()">
-            <ion-label>Casual Leave</ion-label>
-            <p slot="end">23/5/2019</p>
-          </ion-item>
-          <ion-item (click)="details()">
-            <ion-label>Compulsory Off</ion-label>
-            <p slot="end">23/5/2019</p>
-          </ion-item>
-          <ion-item (click)="details()">
-            <ion-label>Privilege Leave</ion-label>
-            <p slot="end">23/5/2019</p>
-          </ion-item>
-          <ion-item (click)="details()">
-            <ion-label>Medical Leave</ion-label>
-            <p slot="end">23/5/2019</p>
-          </ion-item>
-          <ion-item (click)="details()">
-            <ion-label>Marriage Leave</ion-label>
-            <p slot="end">23/5/2019</p>
-          </ion-item>
-          <ion-item (click)="details()">
-            <ion-label>Casual Leave</ion-label>
-            <p slot="end">23/5/2019</p>
-          </ion-item>
-          <ion-item (click)="details()">
-            <ion-label>Compulsory Off</ion-label>
-            <p slot="end">23/5/2019</p>
-          </ion-item>
-          <ion-item (click)="details()">
-            <ion-label>Privilege Leave</ion-label>
-            <p slot="end">23/5/2019</p>
-          </ion-item>
-          <ion-item (click)="details()">
-            <ion-label>Medical Leave</ion-label>
-            <p slot="end">23/5/2019</p>
-          </ion-item>
-          <ion-item (click)="details()">
-            <ion-label>Marriage Leave</ion-label>
-            <p slot="end">23/5/2019</p>
-          </ion-item>
-          <ion-item (click)="details()">
-            <ion-label>Casual Leave</ion-label>
-            <p slot="end">23/5/2019</p>
-          </ion-item>
-          <ion-item (click)="details()">
-            <ion-label>Compulsory Off</ion-label>
-            <p slot="end">23/5/2019</p>
-          </ion-item>
-          <ion-item (click)="details()">
-            <ion-label>Privilege Leave</ion-label>
-            <p slot="end">23/5/2019</p>
-          </ion-item>
-          <ion-item (click)="details()">
-            <ion-label>Medical Leave</ion-label>
-            <p slot="end">23/5/2019</p>
-          </ion-item>
-          <ion-item (click)="details()">
-            <ion-label>Marriage Leave</ion-label>
-            <p slot="end">23/5/2019</p>
+      <ion-list *ngFor ="let lev of attendanceLeaves">
+          <ion-item [routerLink]="['/leave-details']">
+            <ion-label>{{lev.status}}</ion-label>
+            <p slot="end">{{lev.date}}</p>
           </ion-item>
       </ion-list>
     </ion-card>

@@ -4,7 +4,7 @@ import { leaveService } from 'src/app/core/services/leave.service';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { AuthService } from '../core/services/common/auth.service';
-
+import { attendanceService } from 'src/app/core/services/attendance.service';
 
 @Component({
   selector: 'app-apply-leave',
@@ -15,12 +15,24 @@ export class ApplyLeaveComponent implements OnInit, AfterViewInit {
 
   //user = AuthService.getLoggedUser();
   userID = AuthService.getLoggedUser().id;
+  officeID = AuthService.getLoggedUser().OfficeId;
+  hour;
+  minute;
+  second;
+  date;
+  month;
+  year;
+  myDate = new Date();
+  currentDateTime: any;
+  attendance  = [] ;
+  officeLeaves = [];
+  markedFail = 0 ; 
+
   @ViewChild('leaveApplicationFormRef', { static: false }) leaveApplicationFormRef: NgForm;
   public leaveApplicationForm: FormGroup;
 
-
   constructor(private leaveService: leaveService, public toastController: ToastController,
-    private route: Router) { }
+    private route: Router,  private attendanceService: attendanceService,) { }
 
   ngAfterViewInit(): void {
   }
@@ -46,23 +58,35 @@ export class ApplyLeaveComponent implements OnInit, AfterViewInit {
   }
 
 
+  public fetchCurentDate (){
+    this.currentDateTime=this.datepipe.transform((new Date), 'dd/M/yyyy');
+   console.log(this.currentDateTime);
+    }
+    
   createLeaves() {
     //this.isSubmitted = true;
     console.log(this.leaveApplicationForm.value);
+    this.date = this.myDate.getDate();
+    this.month = this.myDate.getMonth() + 1;
+    this.year = this.myDate.getFullYear();
      if (this.leaveApplicationForm.invalid) {
        this.leaveApplicationForm.markAllAsTouched();
        this.presentToast("All the fields are required!");
        console.log("in if statement");
        return;
      }
+
     const value = JSON.parse(JSON.stringify(this.leaveApplicationForm.value));
     value[`EmployeeId`] = AuthService.getLoggedUser().id;
+    value[`OfficeId`] = this.officeID;
+    value['date'] = this.date + "/" + this.month + "/" + this.year;
+    
     delete value._id;
     console.log("out of if statement...");
 
      if (this.leaveApplicationForm.value._id) {
        this.leaveService.updateLeaves(this.leaveApplicationForm.value._id, value).subscribe((response) => {
-         console.log("Sample updated successfully");
+         console.log("leave updated successfully");
          this.leaveApplicationForm.reset();
        }, (error) => {
        })
@@ -75,16 +99,13 @@ export class ApplyLeaveComponent implements OnInit, AfterViewInit {
         this.presentToast("Leave Applied Successfully!");
         this.leaveApplicationForm.reset();
         this.route.navigate(['/dashboard']);
-      })
-      
+      }) 
     }
-
-
-
 
   setupForm() {
 
     this.leaveApplicationForm = new FormGroup({
+      
         type: new FormControl('', [Validators.required]),
         startDate: new FormControl('', [Validators.required]),
         endDate: new FormControl('', [Validators.required]),
