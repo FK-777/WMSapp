@@ -4,7 +4,7 @@
 
 
 
-  <ion-menu menuId="menu" content-id="main">
+  <!-- <ion-menu menuId="menu" content-id="main">
 
 
     <ion-header>
@@ -50,7 +50,10 @@
       </ion-item>
     </ion-list>
     </ion-content>
-    </ion-menu>
+    </ion-menu> -->
     
+
+    <form [formGroup]="locationForm" #locationFormRef="ngForm" novalidate>
+    </form>
     <ion-router-outlet id="main"></ion-router-outlet>
 </ion-app>

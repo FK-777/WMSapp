@@ -6,6 +6,9 @@ import { AttendancethumbComponent } from './attendancethumb.component';
 import { DatePipe } from '@angular/common';
 import { AttendancethumbComponentRoutingModule } from './attendancethumb-routing.module';
 import { DashboardComponent } from '../dashboard/dashboard.component';
+import { Diagnostic } from '@awesome-cordova-plugins/diagnostic/ngx';
+import { AndroidPermissions } from '@awesome-cordova-plugins/android-permissions/ngx';
+
 
 
 @NgModule({
@@ -17,6 +20,6 @@ import { DashboardComponent } from '../dashboard/dashboard.component';
     AttendancethumbComponentRoutingModule
   ],
   declarations: [AttendancethumbComponent],
-  providers: [DatePipe, DashboardComponent]
+  providers: [DatePipe, DashboardComponent, Diagnostic, AndroidPermissions]
 })
 export class AttendancethumbComponentModule {}

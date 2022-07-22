@@ -5,6 +5,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AttendancepinComponent } from './attendancepin.component';
 import { DatePipe } from '@angular/common';
 import { AttendancepinComponentRoutingModule } from './attendancepin-routing.module';
+import { Diagnostic } from '@awesome-cordova-plugins/diagnostic/ngx';
+import { AndroidPermissions } from '@awesome-cordova-plugins/android-permissions/ngx';
 
 
 @NgModule({
@@ -16,6 +18,6 @@ import { AttendancepinComponentRoutingModule } from './attendancepin-routing.mod
     AttendancepinComponentRoutingModule
   ],
   declarations: [AttendancepinComponent],
-  providers: [DatePipe]
+  providers: [DatePipe, Diagnostic, AndroidPermissions]
 })
 export class AttendancepinComponentModule {}

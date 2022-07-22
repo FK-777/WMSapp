@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { LeaveDetailsComponent } from './leave-details.component';
 
 import { LeaveDetailsComponentRoutingModule } from './leave-details-routing.module';
+import { LeaveListComponent } from '../leave-list/leave-list.component';
 
 
 @NgModule({
@@ -14,6 +15,7 @@ import { LeaveDetailsComponentRoutingModule } from './leave-details-routing.modu
     IonicModule,
     LeaveDetailsComponentRoutingModule
   ],
-  declarations: [LeaveDetailsComponent]
+  declarations: [LeaveDetailsComponent],
+  providers: [DatePipe]
 })
 export class LeaveDetailsComponentModule {}

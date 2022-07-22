@@ -7,6 +7,12 @@ import { AuthService } from 'src/app/core/services/common/auth.service';
 import { AuthenticationService } from 'src/app/core/services/common/authentication.service';
 import { StorageService } from 'src/app/core/services/common/storage.service';
 
+import { BackgroundMode } from '@ionic-native/background-mode/ngx';
+import { Platform } from '@ionic/angular';
+
+
+import { LoadingController } from '@ionic/angular';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -18,7 +24,10 @@ export class LoginComponent implements OnInit {
   loading: boolean;
   constructor(private router: Router, public formBuilder: FormBuilder,
     private authenticationService: AuthenticationService,
-    public toastController: ToastController) {
+    public toastController: ToastController,
+    private platform: Platform,
+    private backgroundMode: BackgroundMode,
+    private loadingCtrl: LoadingController) {
   }
 
 
@@ -48,7 +57,15 @@ export class LoginComponent implements OnInit {
   //   this.router.navigate(['/dashboard']);
   // }
 
-   login() {
+
+   async login() {
+
+    const loading = await this.loadingCtrl.create({
+      message: 'Please Wait...',
+      //duration: 3000
+      spinner: "dots"
+    });
+    await loading.present();
     console.log("login called")
     //this.router.navigate(['/dashboard']);
      if (this.loginForm.invalid) {
@@ -82,6 +99,7 @@ export class LoginComponent implements OnInit {
 
            if (response.role == "employee") {
              console.log("aya hu bhai");
+             loading.dismiss();
              this.router.navigate(['/dashboard']);
              this.presentToast("Login Successful!");
            } else
@@ -91,6 +109,7 @@ export class LoginComponent implements OnInit {
            }
          },
          (response) => {
+          loading.dismiss();
            if (response.error && response.error.message) {
            this.presentToast(response.error.message);
              console.log(response.error.message);
@@ -150,5 +169,22 @@ export class LoginComponent implements OnInit {
       this.loginForm.controls.password.hasError('minlength') ? 'Password is required of minimum length of 8 characters' :
         this.loginForm.controls.password.hasError('maxlength') ? 'Password cannot exceed 100 characters' :
           '';
+  }
+
+
+  backgroundActive() {
+    this.platform.ready().then(() => {
+      this.backgroundMode.setDefaults({
+        title: 'Active',
+        text: 'App is tracking you!',
+        icon: 'icon', // this will look for icon.png in platforms/android/res/drawable|mipmap
+        //color: String // hex format like 'F14F4D'
+        resume: true,
+        hidden: false,
+        bigText: true
+    })
+    this.backgroundMode.enable();
+    this.backgroundMode.moveToBackground();
+    });
   }
 }

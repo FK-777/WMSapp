@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
 import { attendanceService } from 'src/app/core/services/attendance.service';
 import { leaveService } from 'src/app/core/services/leave.service';
 import { AuthService } from '../core/services/common/auth.service';
@@ -12,27 +13,39 @@ import { AuthService } from '../core/services/common/auth.service';
 export class LeaveListComponent implements OnInit {
 leaves = [];
 userId = AuthService.getLoggedUser().id ;
-attendanceLeaves = [];
+myLeaves = [];
 markerleave = 0 ;
-  constructor(private route: Router ,private attendanceService: attendanceService, private leaveService: leaveService,) { }
+leaveID;
+  constructor(private route: Router ,private attendanceService: attendanceService,
+    private nav: NavController, private leaveService: leaveService,) { }
 
-  details(){
-    this.route.navigate(['/leave-details']);
+  details(id){
+    console.log(id);
+    let navigationExtras: NavigationExtras = {
+      state: {
+        user: id
+      }
+    };
+    this.route.navigate(['leave-details'], navigationExtras);
   }
 
-  checkin(){
+  ngOnInit() {
+    this.fetchLeaves();
+  }
+
+  fetchLeaves(){
     const condition = {};
     this.leaveService.getLeaves(condition).subscribe((response) =>{
-    this.leaves =response;
-    for(let one=0 , two=0; one < this.leaves.length ; one++){
+    this.leaves = response;
+    for(let one=0, two=0; one < this.leaves.length ; one++){
     if(this.leaves[one]['EmployeeId'] == this.userId){
-    this.attendanceLeaves[two] = this.leaves[one];
-    this.markerleave = this.attendanceLeaves.length;
+    this.myLeaves[two] = this.leaves[one];
+    //this.markerleave = this.attendanceLeaves.length;
     two++;
-    }}
-    })}
-  ngOnInit() {
-    this.checkin();
+    console.log(this.myLeaves);
+    }    
+  }
+    })
   }
 
 }

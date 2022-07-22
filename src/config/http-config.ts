@@ -8,7 +8,7 @@ export class HttpConfig {
     return environment.mainUrl + this.MAIN_API_URL;
   }
 
-  static authApiUrl() {
-    return environment.authUrl + this.AUTH_API_URL;
-  }
+  // static authApiUrl() {
+  //   return environment.authUrl + this.AUTH_API_URL;
+  // }
 }

@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { AuthService } from '../core/services/common/auth.service';
 import { attendanceService } from 'src/app/core/services/attendance.service';
+import { CommonModule, DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-apply-leave',
@@ -32,7 +33,7 @@ export class ApplyLeaveComponent implements OnInit, AfterViewInit {
   public leaveApplicationForm: FormGroup;
 
   constructor(private leaveService: leaveService, public toastController: ToastController,
-    private route: Router,  private attendanceService: attendanceService,) { }
+    private route: Router,  private attendanceService: attendanceService, private datepipe : DatePipe) { }
 
   ngAfterViewInit(): void {
   }
@@ -59,7 +60,7 @@ export class ApplyLeaveComponent implements OnInit, AfterViewInit {
 
 
   public fetchCurentDate (){
-    this.currentDateTime=this.datepipe.transform((new Date), 'dd/M/yyyy');
+    this.currentDateTime=this.datepipe.transform((new Date), 'dd/MM/yyyy');
    console.log(this.currentDateTime);
     }
     
@@ -106,7 +107,7 @@ export class ApplyLeaveComponent implements OnInit, AfterViewInit {
 
     this.leaveApplicationForm = new FormGroup({
       
-        type: new FormControl('', [Validators.required]),
+        leaveType: new FormControl('', [Validators.required]),
         startDate: new FormControl('', [Validators.required]),
         endDate: new FormControl('', [Validators.required]),
         reason: new FormControl('', [Validators.required]),

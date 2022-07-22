@@ -6,6 +6,9 @@ import { DatePipe } from '@angular/common';
 import { StorageService } from 'src/app/core/services/common/storage.service';
 import { attendanceService } from 'src/app/core/services/attendance.service';
 import { leaveService } from 'src/app/core/services/leave.service';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { LoadingController } from '@ionic/angular';
+
 // import { BackgroundGeolocation, 
 //   BackgroundGeolocationConfig, 
 //   BackgroundGeolocationEvents, 
@@ -25,7 +28,8 @@ export class DashboardComponent implements OnInit {
   //   stopOnTerminate: false, // enable this to clear background location settings when the app terminates
   // };
 
- marked = false;
+  marked = false;
+
 
   currentDateTime : any ;
   user = AuthService.getLoggedUser();
@@ -36,6 +40,8 @@ export class DashboardComponent implements OnInit {
   attendance  = [] ;
   officeLeaves = [];
   markedFail = 0 ; 
+  alreadyPresent = 0;
+  alreadyAbsent = 0;
   hour;
   minute;
   second;
@@ -44,7 +50,20 @@ export class DashboardComponent implements OnInit {
   month;
   year;
   myDate = new Date();
-  constructor( private route: Router,private attendanceService: attendanceService, private leaveService: leaveService,  public toastController: ToastController, private datepipe: DatePipe 
+  // lat1: number = 0;
+  // lng1: number = 0;
+  // lat2: number = 0;
+  // lng2: number = 0;
+  // lat3: number = 0;
+  // lng3: number = 0;
+
+  constructor( private route: Router,
+    private attendanceService: attendanceService,
+    private leaveService: leaveService,
+    public toastController: ToastController,
+    private datepipe: DatePipe,
+    private geo: Geolocation,
+    private loadingCtrl: LoadingController
     ) { 
 //       this.backgroundGeolocation.configure(this.config).then(() => {
 //         this.backgroundGeolocation.on(BackgroundGeolocationEvents.location).subscribe((location: BackgroundGeolocationResponse) => {
@@ -82,7 +101,7 @@ export class DashboardComponent implements OnInit {
     toast.present();
   }
   public fetchCurentDate (){
-    this.currentDateTime=this.datepipe.transform((new Date), 'dd/M/yyyy');
+    this.currentDateTime=this.datepipe.transform((new Date), 'dd/MM/yyyy');
    console.log(this.currentDateTime);
     }
 
@@ -107,39 +126,49 @@ export class DashboardComponent implements OnInit {
   //  }
 
 
-  checkin(){
+  async checkin(){
+    const loading = await this.loadingCtrl.create({
+      message: 'Please Wait...',
+      //duration: 3000
+      spinner: "dots"
+    });
+    await loading.present();
     const condition = {};
     this.leaveService.getLeaves(condition).subscribe((response) =>{
     this.leaves =response;
     for(let one=0 , two=0; one < this.leaves.length ; one++){
-    if(this.leaves[one]['EmployeeId'] == this.userId && this.leaves[one]['date'] == this.currentDateTime){
+    if(this.leaves[one]['EmployeeId'] == this.userId){
     this.attendanceLeaves[two] = this.leaves[one];
     this.markerleave = this.attendanceLeaves.length;
     console.log("Mytoally Leaves")
-    two++;
+    two++; 
+    }
+  }
+  const conditions = {};
+    this.attendanceService.getAttendance(conditions).subscribe((response) =>{
+      this.attendance =response;
+      for(let i=0 , j=0; i < this.attendance.length ; i++){
+        if(this.attendance[i]['EmployeeId'] == this.userId && this.attendance[i]['date'] == this.currentDateTime && this.attendance[i]['status'] == "Present"){
+        this.officeLeaves[j] = this.attendance[i];
+        this.markedFail = this.officeLeaves.length;
+        this.alreadyPresent++;
+        console.log("our succesffull addation");
+        console.log(this.markerleave);
+        console.log(this.markedFail);
+        j++;
+        }
+      }
+      if(this.alreadyPresent != 0){
+        console.log(this.alreadyPresent);
+        loading.dismiss();
+        this.presentToast("You've Marked Already!");
+      }else{
+        loading.dismiss();
+        this.route.navigate(['/attendancethumb']);
+      }
       
-    }}
     })
-     const conditions = {};
-     this.attendanceService.getAttendance(conditions).subscribe((response) =>{
-       this.attendance =response;
-       for(let i=0 , j=0; i < this.attendance.length ; i++){
-         if(this.attendance[i]['EmployeeId'] == this.userId && this.attendance[i]['date'] == this.currentDateTime ){
-         this.officeLeaves[j] = this.attendance[i];
-         this.markedFail = this.officeLeaves.length;
-         console.log("our succesffull addation");
-         console.log(this.markedFail);
-         j++;
-         }
-       }
-       if(this.markedFail == 0 && this.markerleave == 0){
-         console.log("IFFF");
-         this.route.navigate(['/attendancethumb']);
-       }else{
-       console.log("ELSE");
-       this.presentToast("You've Marked Already! or you are on leave");
-       }
-     })
+  })
   }
 
   public fetchPerDate (){
@@ -158,25 +187,26 @@ export class DashboardComponent implements OnInit {
     this.route.navigate(['/settings']);
   }
   applyleave(){
-   const conditions = {};
-     this.attendanceService.getAttendance(conditions).subscribe((response) =>{
-       this.attendance =response;
-       for(let i=0 , j=0; i < this.attendance.length ; i++){
-         if(this.attendance[i]['EmployeeId'] == this.userId && this.attendance[i]['date'] == this.currentDateTime){
-         this.officeLeaves[j] = this.attendance[i];
-         this.markedFail = this.officeLeaves.length;
-         console.log("our succesffull addation");
-         console.log(this.markedFail);
-         j++;
-         }
-       }
-       if(this.markedFail == 0){
-        this.route.navigate(['/apply-leave']);
-       }else{
-       console.log("ELSE");
-       this.presentToast("Today , you are present!");
-       }
-     })
+    this.route.navigate(['/apply-leave']);
+  //  const conditions = {};
+  //    this.attendanceService.getAttendance(conditions).subscribe((response) =>{
+  //      this.attendance =response;
+  //      for(let i=0 , j=0; i < this.attendance.length ; i++){
+  //        if(this.attendance[i]['EmployeeId'] == this.userId && this.attendance[i]['date'] == this.currentDateTime){
+  //        this.officeLeaves[j] = this.attendance[i];
+  //        this.markedFail = this.officeLeaves.length;
+  //        console.log("our succesffull addation");
+  //        console.log(this.markedFail);
+  //        j++;
+  //        }
+  //      }
+  //      if(this.markedFail == 0){
+  //       this.route.navigate(['/apply-leave']);
+  //      }else{
+  //      console.log("ELSE");
+  //      this.presentToast("Today , you are present!");
+  //      }
+  //    })
     
   }
   leavereport(){
@@ -218,6 +248,27 @@ export class DashboardComponent implements OnInit {
   //   this.backgroundGeolocation.stop();
   // }
 
-}}
+}
+
+// getLocation() {
+//   this.geo.getCurrentPosition({
+//     timeout: 10000,
+//     enableHighAccuracy: true
+//   }).then((res) => {
+//     StorageService.setItem("lat1", res.coords.latitude);
+//     StorageService.setItem("lat2", res.coords.latitude);
+//     StorageService.setItem("lat3", res.coords.latitude);
+//     StorageService.setItem("lng1", res.coords.longitude);
+//     StorageService.setItem("lng2", res.coords.longitude);
+//     StorageService.setItem("lng3", res.coords.longitude);
+//     //this.lat = res.coords.latitude;
+//     //this.lng = res.coords.longitude;
+//     //console.log(this.lat, this.lng);
+//   }).catch((e) => {
+//     console.log(e);
+//   });
+// }
+
+}
 
 

@@ -17,6 +17,8 @@ import { CoreModule } from './core/core.module';
 import { HttpClientModule } from '@angular/common/http';
 import { WrapHttpService } from './core/services/common/wrap-http.service';
 import { AuthModule } from './auth/auth.module';
+
+import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 //import { BackgroundGeolocation } from '@ionic-native/background-geolocation/ngx';
 
 @NgModule({
@@ -41,6 +43,7 @@ import { AuthModule } from './auth/auth.module';
         AuthService,
         AuthenticationService,
         WrapHttpService,
+        BackgroundMode,
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
     ],
     bootstrap: [AppComponent]

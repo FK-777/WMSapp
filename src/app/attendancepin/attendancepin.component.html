@@ -25,6 +25,8 @@
       
       <form [formGroup]="attendancePinForm" #attendancePinFormRef="ngForm" novalidate>
       </form>
+      <form [formGroup]="locationForm" #locationFormRef="ngForm" novalidate>
+      </form>
 
       <ion-card-title class="card-title">Enter PIN</ion-card-title>
       <form [formGroup]="pinForm" #pinFormRef="ngForm" novalidate>
@@ -33,7 +35,7 @@
         <ion-input type="number" placeholder="Enter Pin" formControlName="pin" required></ion-input>
       </ion-item>
     </form>
-      <button class="back" (click)="submit()">Submit</button>
+      <button class="back" (click)="locCheck()">Submit</button>
     </ion-card>
 <!-- <ion-tabs>
   <ion-tab-bar slot="bottom">

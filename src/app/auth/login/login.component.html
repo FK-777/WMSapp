@@ -31,11 +31,14 @@
       <ion-card-content class="text-danger mt-1" *ngIf="loginForm.controls.password.touched || loginForm.controls.password.dirty">
         {{ passwordError() }}</ion-card-content>  
     </div>
-    <ion-card-content class="bold-text" routerLink="/auth/forgot-password">Forgot Password?</ion-card-content>
+    <!-- <ion-card-content class="bold-text" routerLink="/auth/forgot-password">Forgot Password?</ion-card-content> -->
+    <ion-card-content class="bold-text"></ion-card-content>
   
-      <button class="back" [disabled]="loginForm.invalid || loading" (click)="login()">Login</button>
+      <button class="back mt-2" [disabled]="loginForm.invalid || loading" (click)="login()">Login</button>
+      <button class="back mt-2" (click)="backgroundActive()">Exit</button>
     </form>
   
+
   </ion-card>
 </ion-content>
 </ion-app>

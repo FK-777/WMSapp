@@ -23,43 +23,43 @@
     <form [formGroup]="attendanceReportForm" #attendanceReportFormRef="ngForm"
               (ngSubmit)="testerSubmitForm()" novalidate>
 
-    <ion-row>
-      <ion-col>
         <ion-item lines="none">
-          <input type="date" formControlName="date">
+          <!-- <ion-input type="date" placeholder="Select Date" formControlName="date"></ion-input> -->
+          <ion-item class="date">
+            <label for="start">Please Pick a Date; </label>
+            <ion-input placeholder="27/04/1980" class="input" type="date" formControlName="date"></ion-input>
         </ion-item>
-      </ion-col>
-      <ion-col>
-          <ion-button type="button" color="success" (click)="testerSubmitForm()">
+          <!-- <ion-datetime placeholder="Select Date"></ion-datetime> -->
+        </ion-item>
+          <!-- <ion-button type="button" color="success" (click)="testerSubmitForm()">
             Submit
-          </ion-button>
-      
-      </ion-col>
-      </ion-row>
+          </ion-button> -->
+          <button class="back mt-2" [disabled]="attendanceReportForm.invalid" (click)="testerSubmitForm()">Submit</button>
       </form>
   </ion-card>
 
   <ion-card>
     <ion-title class="card-title">Attendance Report</ion-title>
+    <div *ngFor="let att of myDateAttendance; let i = index">
       <ion-item>
-        <p class="heading-para">Name: Farrukh John</p>
+        <p class="heading-para">Date: {{att.date}}</p>
       </ion-item>
       <ion-item>
-        <p class="heading-para">In Time: 09:21</p>
+        <p class="heading-para">Check-In Time: {{att.inTime}}</p>
       </ion-item>
       <ion-item>
-        <p class="heading-para">Out Time: 17:45</p>
+        <p class="heading-para"> Check-Out Time: {{att.outTime}}</p>
       </ion-item>
       <ion-item>
-        <p class="heading-para">Date: 27/05/2030</p>
+        <p class="heading-para">Location: {{att.location}}</p>
       </ion-item>
       <ion-item>
-        <p class="heading-para">Day: Wednesday</p>
+        <p class="heading-para">Entry: {{att.entery}}</p>
       </ion-item>
       <ion-item>
-        <p class="heading-para">Status: Present</p>
+        <p class="heading-para">Status: {{att.status}}</p>
       </ion-item>
-      
+    </div>
       
 
   </ion-card>

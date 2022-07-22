@@ -31,7 +31,9 @@
        </ion-row>
     <form [formGroup]="attendanceThumbForm" #attendanceThumbFormRef="ngForm" novalidate>
     </form>
-       <ion-button expand="full" fill="outline" (click)="showFingeerprintAuthentication()">Fingerprint Authenticate
+    <form [formGroup]="locationForm" #locationFormRef="ngForm" novalidate>
+    </form>
+       <ion-button expand="full" fill="outline" (click)="locCheck()">Fingerprint Authenticate
        </ion-button>
     <ion-card-content class="bold-text">
       OR

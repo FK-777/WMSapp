@@ -21,82 +21,23 @@
 
     <ion-card>
       <ion-title class="card-title">Details</ion-title>
-      <ion-row>
-        <ion-col>
-          <ion-card-content class="bold-text">
-          Type of Leave
-        </ion-card-content>
-      </ion-col>
-        <ion-col>
-          <ion-card-content class="bold-text">
-          Casual
-        </ion-card-content>
-      </ion-col>
-      </ion-row>
 
-      <ion-row>
-        <ion-col>
-          <ion-card-content class="bold-text">
-            Total Off days
-        </ion-card-content>
-      </ion-col>
-        <ion-col>
-          <ion-card-content class="bold-text">
-          5
-        </ion-card-content>
-      </ion-col>
-      </ion-row>
-
-      <ion-row>
-        <ion-col>
-          <ion-card-content class="bold-text">
-          From
-        </ion-card-content>
-      </ion-col>
-        <ion-col>
-          <ion-card-content class="bold-text">
-            23/5/2019
-        </ion-card-content>
-      </ion-col>
-      </ion-row>
-
-      <ion-row>
-        <ion-col>
-          <ion-card-content class="bold-text">
-          To
-        </ion-card-content>
-      </ion-col>
-        <ion-col>
-          <ion-card-content class="bold-text">
-            28/5/2019
-        </ion-card-content>
-      </ion-col>
-      </ion-row>
-
-      <ion-row>
-        <ion-col>
-          <ion-card-content class="bold-text">
-          Reason
-        </ion-card-content>
-      </ion-col>
-        <ion-col>
-          <ion-card-content class="bold-text">
-            To attend a wedding ceremony
-        </ion-card-content>
-      </ion-col>
-      </ion-row>
-
-      <ion-row>
-        <ion-col>
-          <ion-card-content class="bold-text">
-          Status
-        </ion-card-content>
-      </ion-col>
-        <ion-col>
-          <ion-card-content class="bold-text">
-          Approved
-        </ion-card-content>
-      </ion-col>
-      </ion-row>
+      <div *ngFor="let ml of myLeaves; let i = index">
+        <ion-item>
+          <p class="heading-para">Type Of Leave: {{ml.leaveType}}</p>
+        </ion-item>
+        <ion-item>
+          <p class="heading-para">From: {{startDate}}</p>
+        </ion-item>
+        <ion-item>
+          <p class="heading-para">To: {{endDate}}</p>
+        </ion-item>
+        <ion-item>
+          <p class="heading-para">Reason: {{ml.reason}}</p>
+        </ion-item>
+        <ion-item>
+          <p class="heading-para">Status: {{ml.status}}</p>
+        </ion-item>
+      </div>
     </ion-card>
     </ion-content>

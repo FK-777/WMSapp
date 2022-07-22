@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AttendanceReportComponent } from './attendance-report.component';
@@ -14,6 +14,7 @@ import { AttendanceReportComponentRoutingModule } from './attendance-report-rout
     ReactiveFormsModule,
     AttendanceReportComponentRoutingModule
   ],
-  declarations: [AttendanceReportComponent]
+  declarations: [AttendanceReportComponent],
+  providers: [DatePipe],
 })
 export class AttendanceReportComponentModule {}

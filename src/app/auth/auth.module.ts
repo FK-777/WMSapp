@@ -13,7 +13,7 @@ import { IndexPageComponent } from './index-page/index-page.component';
 //import { ContactComponent } from './contact/contact.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { LoginComponentRoutingModule } from '../login/login-routing.module';
+//import { LoginComponentRoutingModule } from '../login/login-routing.module';
 import { VerifyAccountComponent } from './verify-account/verify-account.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { UpdatePasswordComponent } from './update-password/update-password.component';
@@ -72,7 +72,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     FormsModule, ReactiveFormsModule,
     IonicModule,
-    LoginComponentRoutingModule,
+    //LoginComponentRoutingModule,
     //FeatherModule.pick(icons),
     //FeahterIconModule,
     //FeatherModule
